@@ -2,11 +2,15 @@
 // If the unit is attacking, their defense will not be affected.
 // To use, create a custom skill with the keyword "Phalanx" and apply it to the unit/class.
 
+// Also supports a "Formation Breaker" skill - if the attacking unit has this skill, it will disable the Def bonus.
+// This would also require a custom skill with the "Formation Breaker" keyword.
 
 // Code inspired by snippets from LadyRena's Health Shield skill:
 // https://github.com/LadyRena0713/Scripts/blob/master/Skills/Combat%20Mod/Defense/Skill-Health_Shield.js
 // and Goinza's Nerfed Brave Weapons:
 // https://github.com/Goinza/Plugins-for-SRPG-Studio/blob/master/Restricted%20Weapon%20Attack%20Count/nerfed-brave.js
+
+// TODO: These skills assume a 100% activation rate for now, I'll work in the randomizer later
 
 (function() {
     // Checks if a unit is the defender (ie. the one that did not initiate the battle)
@@ -74,7 +78,11 @@
         var passiveIsDefender = isDefender(passive);
         var numHelpers = countNearbyFriendsWithPhalanx(passive);
 
-        if (SkillControl.getPossessionCustomSkill(passive, "Phalanx") && passiveIsDefender) {
+        if (
+            SkillControl.getPossessionCustomSkill(passive, "Phalanx")
+            && passiveIsDefender
+            && !(SkillControl.getPossessionCustomSkill(active, "Formation Breaker"))
+        ) {
             def = def + 4 * numHelpers; // Change the value here if you want more/less defense from this skill
         }
 

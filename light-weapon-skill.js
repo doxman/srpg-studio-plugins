@@ -4,6 +4,8 @@
 
 // To use, create a custom skill with the keyword "Light Weapon" and apply it to the unit/class.
 
+// TODO: These skills assume a 100% activation rate for now, I'll work in the randomizer later
+
 (function() {
     // Overrides AbilityCalculator.getPower() to reduce Str-based power by half if you have the Light Weapon skill.
     AbilityCalculator.getPower = function(unit, weapon) {
