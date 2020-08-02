@@ -1,11 +1,11 @@
-// Grants a Superior Reach skill that does two things when the unit is defending in battle:
+// Grants a Reach skill that does two things when the unit is defending in battle:
 // - Adds 3 damage to the defender, similar to Strong Riposte in FE Fates
 // - Gives the defender a first strike, just like the default Ambush skill (but without displaying itself)
 
-// As with Ambush, Superior Reach is cancelled when both units have it, and the two skills also cancel each other.
-// It is also cancelled if the opponent has a "Formation Breaker" custom skill.
+// As with Ambush, Reach is cancelled when both units have it, and the two skills also cancel each other.
+// It is also cancelled if the opponent has a "Disruptive" custom skill.
 
-// To use, make a custom skill with keyword "Superior Reach".
+// To use, make a custom skill with keyword "Reach".
 
 // TODO: These skills assume a 100% activation rate for now, I'll work in the randomizer later
 
@@ -27,10 +27,10 @@
         var pow = calculateAttackPower.call(this, active, passive, weapon, isCritical, totalStatus, trueHitValue);
         var passiveIsAttacker = isAttacker(passive);
         if (
-            SkillControl.getPossessionCustomSkill(active, "Superior Reach")
+            SkillControl.getPossessionCustomSkill(active, "Reach")
             && passiveIsAttacker
-            && !SkillControl.getPossessionCustomSkill(passive, "Superior Reach")
-            && !SkillControl.getPossessionCustomSkill(passive, "Formation Breaker")
+            && !SkillControl.getPossessionCustomSkill(passive, "Reach")
+            && !SkillControl.getPossessionCustomSkill(passive, "Disruptive")
             && !SkillControl.getPossessionSkill(passive, SkillType.FASTATTACK)
         ) {
             pow = pow + 3;
@@ -44,16 +44,16 @@
         var passive = virtualPassive.unitSelf;
 
         if (SkillControl.getPossessionSkill(active, SkillType.FASTATTACK)
-            || SkillControl.getPossessionCustomSkill(active, "Superior Reach")
-            || SkillControl.getPossessionCustomSkill(active, "Formation Breaker")) {
+            || SkillControl.getPossessionCustomSkill(active, "Reach")
+            || SkillControl.getPossessionCustomSkill(active, "Disruptive")) {
             // All of these skills prevent a pre-emptive attack when the attacker has them
             return true;
         }
 
-        // If the defender has "Preemptive Attack" or "Superior Reach" and the attacker did not disable them, the defender attacks first.
+        // If the defender has "Preemptive Attack" or "Reach" and the attacker did not disable them, the defender attacks first.
         if (this._attackInfo.isCounterattack) {
             var fastattack = SkillControl.getPossessionSkill(passive, SkillType.FASTATTACK);
-            var superiorReach = SkillControl.getPossessionCustomSkill(passive, "Superior Reach");
+            var superiorReach = SkillControl.getPossessionCustomSkill(passive, "Reach");
 
             if (fastattack) {
                 virtualPassive.skillFastAttack = fastattack;

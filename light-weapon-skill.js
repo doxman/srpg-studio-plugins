@@ -2,12 +2,12 @@
 // If it is a magic weapon, the user's Mag is not affected (but this should be easy to change if you want).
 // Typically this should be used together with multiple attacks to balance a "fast but weak" weapon.
 
-// To use, create a custom skill with the keyword "Light Weapon" and apply it to the unit/class.
+// To use, create a custom skill with the keyword "Lightweight" and apply it to the unit/class.
 
 // TODO: These skills assume a 100% activation rate for now, I'll work in the randomizer later
 
 (function() {
-    // Overrides AbilityCalculator.getPower() to reduce Str-based power by half if you have the Light Weapon skill.
+    // Overrides AbilityCalculator.getPower() to reduce Str-based power by half if you have the Lightweight skill.
     AbilityCalculator.getPower = function(unit, weapon) {
         var pow;
         
@@ -15,7 +15,7 @@
             // Physical attack or Bow attack.
             pow = RealBonus.getStr(unit);
 
-            if (SkillControl.getPossessionCustomSkill(unit, "Light Weapon")) {
+            if (SkillControl.getPossessionCustomSkill(unit, "Lightweight")) {
                 pow = Math.floor(pow / 2);
             }
         }
